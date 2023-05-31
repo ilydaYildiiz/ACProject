@@ -1,0 +1,81 @@
+//
+//Written by GowinSynthesis
+//Product Version "GowinSynthesis V1.9.8.10"
+//Sun May 28 23:03:04 2023
+
+//Source file index table:
+//file0 "\C:/Users/ilyda/OneDrive/Desktop/fpga/ACProject/src/ACProject.v"
+`timescale 100 ps/100 ps
+module KlimaOtomasyonu (
+  clk,
+  reset,
+  sicaklik,
+  blueLED,
+  greenLED,
+  redLED
+)
+;
+input clk;
+input reset;
+input sicaklik;
+output blueLED;
+output greenLED;
+output redLED;
+wire clk_d;
+wire reset_d;
+wire blueLED_d;
+wire greenLED_d;
+wire n42_7;
+wire [0:0] durum;
+wire VCC;
+wire GND;
+  IBUF clk_ibuf (
+    .O(clk_d),
+    .I(clk) 
+);
+  IBUF reset_ibuf (
+    .O(reset_d),
+    .I(reset) 
+);
+  OBUF blueLED_obuf (
+    .O(blueLED),
+    .I(blueLED_d) 
+);
+  OBUF greenLED_obuf (
+    .O(greenLED),
+    .I(greenLED_d) 
+);
+  OBUF redLED_obuf (
+    .O(redLED),
+    .I(greenLED_d) 
+);
+  DFFC durum_0_s0 (
+    .Q(durum[0]),
+    .D(VCC),
+    .CLK(clk_d),
+    .CLEAR(reset_d) 
+);
+  DFF blueLED_s2 (
+    .Q(blueLED_d),
+    .D(VCC),
+    .CLK(clk_d) 
+);
+  DFF greenLED_s2 (
+    .Q(greenLED_d),
+    .D(n42_7),
+    .CLK(clk_d) 
+);
+  INV n42_s2 (
+    .O(n42_7),
+    .I(durum[0]) 
+);
+  VCC VCC_cZ (
+    .V(VCC)
+);
+  GND GND_cZ (
+    .G(GND)
+);
+  GSR GSR (
+    .GSRI(VCC) 
+);
+endmodule /* KlimaOtomasyonu */
